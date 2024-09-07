@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X-Faktor Bingó</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #f0f0f0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        #bingotabla {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .cell {
+            width: 100px; /* Fix szélesség */
+            height: 100px; /* Fix magasság */
+            border: 2px solid #fff;
+            background-color: #1c1c1c;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .cell:hover {
+            background-color: #333;
+            transform: scale(1.05);
+        }
+
+        .cell.checked {
+            background-color: #f0f0f0;
+            color: #121212;
+            transform: scale(1.1);
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 1rem;
+            color: #121212;
+            background-color: #f0f0f0;
+            border: 2px solid #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            background-color: #fff;
+            color: #121212;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 600px) {
+            #bingotabla {
+                grid-template-columns: repeat(3, 1fr); /* Mobilon 3 oszlop */
+            }
+
+            .cell {
+                width: auto; /* Szélesség mobilon igazodik */
+                height: 100px; /* Magasság rögzítve marad */
+                font-size: 0.7rem; /* Kis méretű betű mobilon */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>X-Faktor Elődöntő Bingó</h1>
+        <div id="bingotabla"></div>
+        <button onclick="ujraGeneralas()">Új bingótábla</button>
+    </div>
+
+    <script>
+const esemenyek = [
+    "Laci sír",
+    "Trash Rapper",
+    "W zene",
+    "Mentor beef",
+    "4 igen",
+    "Rapper duo",
+    "Opera énekes",
+    "Külföldi előadó",
+    "Fülrák",
+    "Híres ember",
+    "Ideges előadó",
+    "Laci beszól",
+    "Benned van az X",
+    "Mentor a színpadon",
+    "Sír a versenyző",
+    "Majka beszól",
+    "Valmar zene",
+    "Andi zene",
+    "Majka Freaky",
+    "Andi énekel",
+    "Leutánozzák Lacit",
+    "Mentorok táncolnak",
+    "Goofy előadó",
+    "Jó énekes",
+    "Majka leéget",
+    "Zsűri nevet",
+    "Majka imitálja Lacit",
+    "Külföldi előadó nem beszél angolul",
+    "Előadó elfelejtik a szöveget",
+    "Zsűri vicces kritikája",
+    "Andi zavarba jön",
+    "Különleges stílus",
+    "Zsűri énekel",
+    "Előadó eltéved"
+];
+
+
+
+        // Elemek keverése
+        function kever(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Bingótábla generálása
+        function ujraGeneralas() {
+            const bingotabla = document.getElementById("bingotabla");
+            bingotabla.innerHTML = ''; // Tábla kiürítése
+
+            const kevertEsemenyek = kever([...esemenyek]).slice(0, 25); // Véletlenszerű 25 esemény
+            kevertEsemenyek.forEach((esemeny) => {
+                const cell = document.createElement('div');
+                cell.classList.add('cell');
+                cell.textContent = esemeny;
+
+                // Cellára kattintva állapot váltás
+                cell.addEventListener('click', function() {
+                    cell.classList.toggle('checked');
+                });
+
+                bingotabla.appendChild(cell);
+            });
+        }
+
+        // Első tábla generálása
+        ujraGeneralas();
+    </script>
+</body>
+</html>
